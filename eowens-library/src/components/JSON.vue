@@ -11,7 +11,12 @@
       <!-- Activity 6: Render a list containing author names and their birth years. Hint: Make use of the v-for directive to iterate through the array of authors. -->
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
        <ul>
-        <li v-for="author in authors" :key="author.id">
+        <li 
+          v-for="author in authors" 
+          :key="author.id" 
+          @click="highlightAuthor(author.id)"
+          :class="{ 'highlighted-author': author.id === highlightedAuthor }"
+        >
           {{ author.name  }} ({{ author.birthYear }})
         </li>
        </ul>
@@ -188,6 +193,15 @@ const countries = computed(() => {
 const topSellers = computed(() => {
   return bookstores.topSellers
 });
+
+// Highlighted author ref
+// Define the highlightedAuthor ref
+const highlightedAuthor = ref(null);
+
+function highlightAuthor(authorId) {
+  highlightedAuthor.value = authorId;
+}
+
 </script>
 
 <style scoped>
@@ -256,5 +270,12 @@ li {
 
 p, li, h3 {
   color: #000000; /* Force black color for these elements */
+}
+
+/* Highlighted author class */
+.highlighted-author {
+  background-color: #42b883;
+  color: white;
+  font-weight: bold;
 }
 </style>
