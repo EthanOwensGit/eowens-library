@@ -10,17 +10,30 @@
       <h3>Iterating through Arrays</h3>
       <!-- Activity 6: Render a list containing author names and their birth years. Hint: Make use of the v-for directive to iterate through the array of authors. -->
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
+       <ul>
+        <li v-for="author in authors" :key="author.id">
+          {{ author.name  }} ({{ author.birthYear }})
+        </li>
+       </ul>
       
       <h3>Filtering Arrays</h3>
       <!-- Activity 7: Render a list containing authors born after 1850. Hint: Make use of the v-for directive to iterate through the array of authors that you have filtered out. -->
       <p>Authors born after 1850:</p>
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
+       <ul>
+        <li v-for="author in modernAuthors" :key="author.id">
+          {{ author.name }} ({{ author.birthYear }})
+        </li>
+       </ul>
 
       <h3>Mapping Arrays</h3>
       <p>Famous works:</p>
       <ul>
         <!-- Activity 8: Render a list of all famous works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
         <!-- TODO: CODE TO RENDER LIST OF FAMOUS WORKS HERE -->
+         <li v-for="work in allFamousWorks" :key="work">
+          {{ work }}
+         </li>
       </ul>
 
       <h3>Finding in Arrays</h3>
@@ -30,6 +43,11 @@
       <p>{{ austen?.name }}'s works:</p>
       <!-- Activity 9: Render a list of Austen's works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
       <!-- TODO: CODE TO RENDER LIST OF AUSTEN'S WORKS HERE -->
+       <ul>
+        <li v-for="work in austen.famousWorks" :key="work.title">
+          {{ work.title }} ({{ work.year }})
+        </li>
+       </ul>
     </section>
 
     <section class="lab-section">
@@ -41,29 +59,51 @@
         Company:
         <!-- Activity 9a: Get the company name from the bookstores object. -->
         <!-- TODO: CODE TO GET COMPANY NAME HERE -->
+         {{ companyName }}
       </p>
 
       <p>
         Total Stores:
         <!-- Activity 9b: Get the total number of stores from the bookstores object. -->
         <!-- TODO: CODE TO GET TOTAL STORES HERE -->
+         {{ totalStores }}
       </p>
 
       <h3>Iterating Object Properties</h3>
       <p>Store Types:</p>
       <!-- Activity 10: Iterate through the storeTypes array and display the store type and the number of stores that use that type. -->
       <!-- TODO: CODE TO RENDER LIST OF STORE TYPES HERE -->
+      <ul>
+        <li v-for="type in storeTypes" :key="type">
+          {{ type[0] }}: {{ type[1] }} stores
+        </li>
+      </ul>
 
       <h3>Nested Objects</h3>
       <p>Opening Hours:</p>
       <!-- Activity 11: Iterate through the openingHours object and display the day of the week and the opening and closing times. -->
       <!-- TODO: CODE TO RENDER LIST OF OPENING HOURS HERE -->
+      <ul>
+        <li v-for="day in openingHours" :key="day">
+          {{ day[0] }}: {{ day[1].open }} - {{ day[1].close }}
+        </li>
+      </ul>
 
       <h3>Working with Arrays in Objects</h3>
       <!-- Activity 12: Get the top sellers from the bookstores object. -->
       <!-- TODO: CODE TO GET TOP SELLERS HERE -->
       <p>We operate in:</p>
-      <p>Our #1 seller:</p>
+      <ul>
+        <li v-for="country in countries" :key="country">
+          {{ country }}
+        </li>
+      </ul>
+      <p>Our top sellers:</p>
+      <ul>
+        <li v-for="topSeller in topSellers" :key="topSeller">
+          {{ topSeller }}
+        </li>
+      </ul>
     </section>
 
     <section class="lab-section">
@@ -89,7 +129,7 @@ import { ref, computed } from "vue"
 
 // Activity 1: Import JSON files (authors.json and bookstores.json)
 // TODO: CODE TO IMPORT JSON FILES HERE
-import authors from "../assets/json/authors.json"
+import authors from "../assets/json/authors.json";
 import bookstores from "../assets/json/bookstores.json"
 
 const showMessage = ref(false)
@@ -97,22 +137,57 @@ const showMessage = ref(false)
 // Activity 2: Get authors born after 1850
 const modernAuthors = computed(() => {
   // TODO: CODE TO FILTER ARRAY OF AUTHORS HERE
-})
+   return authors.filter((author) => author.birthYear > 1850);
+});
 
 // Activity 3: Get all famous works
 const allFamousWorks = computed(() => {
   // TODO: CODE TO GET ALL FAMOUS WORKS HERE
+  return authors.flatMap((author) => author.famousWorks.map((work) => work.title));
 })
 
 // Activity 4: Find author by name
 const orwell = computed(() => {
   // TODO: CODE TO FIND AUTHOR BY NAME HERE
+  return authors.find((author) => author.name === "George Orwell");
 })
 
 // Activity 5: Find author by ID
 const austen = computed(() => {
   // TODO: CODE TO FIND AUTHOR BY ID HERE
+  return authors.find((author) => author.id === 1);
 })
+
+// Get the company name
+const companyName = computed(() => {
+  return bookstores.name
+  });
+
+// Get total number of stores
+const totalStores = computed(() => {
+  return bookstores.totalStores
+});
+
+// Get store types
+const storeTypes = computed(() => {
+  return Object.entries(bookstores.storeTypes);
+});
+
+// Get opening hours
+const openingHours = computed(() => {
+  return Object.entries(bookstores.openingHours);
+});
+
+const countries = computed(() => {
+  return bookstores.countries
+});
+
+// Get top sellers
+const topSellers = computed(() => {
+  return bookstores.topSellers
+});
+
+
 </script>
 
 <style scoped>
@@ -124,6 +199,9 @@ const austen = computed(() => {
   background-color: #f4f4f4;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.p {
+  color: #333;
 }
 
 h1,
@@ -174,5 +252,9 @@ li {
   padding: 10px;
   margin: 5px 0;
   border-radius: 5px;
+}
+
+p, li, h3 {
+  color: #000000; /* Force black color for these elements */
 }
 </style>
