@@ -32,8 +32,8 @@ const router = useRouter()
 const { loginAuth, loginNoAuth } = useAuth()
 
 const handleLogin = () => {
-  const hardcodedUsername = 'libraryUser'
-  const hardcodedPassword = 'password123'
+  const hardcodedUsername = 'authLibraryUser'
+  const hardcodedPassword = 'Password123!'
 
   if (username.value === hardcodedUsername && password.value === hardcodedPassword) {
     loginAuth()
