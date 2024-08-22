@@ -12,10 +12,21 @@
         <li class="nav-item">
           <router-link to="/about" class="nav-link" active-class="active">About</router-link>
         </li>
+        <li v-if="isAuthenticated !== null" class="nav-item">
+          <router-link to="/logout" class="nav-link btn btn-link">Logout</router-link>
+        </li>
+        <li v-else class="nav-item">
+          <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
+        </li>
       </ul>
     </header>
   </div>
 </template>
+
+<script setup>
+import { useAuth } from '../router'
+const { isAuthenticated } = useAuth()
+</script>
 
 <style scoped>
 .b-example-divider {
