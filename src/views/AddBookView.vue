@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="block center">
     <h1>Add Book</h1>
     <form @submit.prevent="addBook">
       <div>
@@ -12,7 +12,9 @@
       </div>
       <button type="submit">Add Book</button>
     </form>
-    <BookList />
+    <div :style="{ marginTop: '70px' }">
+      <BookList />
+    </div>
   </div>
 </template>
 
@@ -59,3 +61,22 @@ export default {
   }
 }
 </script>
+
+<style>
+.block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+}
+
+.center input,
+.center button {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: center;
+}
+</style>
