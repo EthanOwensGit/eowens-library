@@ -56,8 +56,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  routes: routes
 })
 
 router.beforeEach((to, from, next) => {
