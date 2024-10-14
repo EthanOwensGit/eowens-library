@@ -7,6 +7,7 @@ import AccessDeniedView from '../views/AccessDeniedView.vue'
 import { ref } from 'vue'
 import FirebaseSignInView from '@/views/FirebaseSignInView.vue'
 import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue'
+import AddBookView from '@/views/AddBookView.vue'
 
 const isAuthenticated = ref(null)
 
@@ -46,12 +47,17 @@ const routes = [
     path: '/FireRegister',
     name: 'FireRegister',
     component: FirebaseRegisterView
+  },
+  {
+    path: '/AddBook',
+    name: 'AddBook',
+    component: AddBookView
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  routes: routes
 })
 
 router.beforeEach((to, from, next) => {
