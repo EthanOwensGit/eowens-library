@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  publicPath: process.env.NODE_ENV === 'production' ? '/eowens-library/' : '/',
+  base: '/eowens-library/',
   plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
